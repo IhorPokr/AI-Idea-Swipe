@@ -182,53 +182,64 @@ struct CardView: View {
     
     var body: some View {
         ZStack {
-            VStack(spacing: 20) {
+            VStack(spacing: 24) {
                 if isLoading {
                     Spacer()
                     ProgressView()
                         .scaleEffect(1.5)
+                        .tint(colorScheme == .dark ? .black : .primary)
                     Spacer()
                 } else {
                     ScrollView(showsIndicators: false) {
-                        VStack(spacing: 20) {
+                        VStack(spacing: 24) {
                             Text(currentIdea.title)
-                                .font(.system(size: 24, weight: .bold))
+                                .font(.system(size: 28, weight: .bold))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(colorScheme == .dark ? .black : .primary)
-                                .padding(.top, 40)
+                                .padding(.top, 44)
                                 .padding(.horizontal)
                             
                             Text(currentIdea.description)
-                                .font(.system(size: 18))
+                                .font(.system(size: 18, weight: .regular))
                                 .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
-                                .padding(.horizontal, 25)
-                                .foregroundColor(colorScheme == .dark ? .black.opacity(0.7) : .secondary)
-                                .padding(.bottom, 20)
-                                .lineSpacing(4)
+                                .padding(.horizontal, 28)
+                                .foregroundColor(colorScheme == .dark ? .black.opacity(0.8) : .secondary)
+                                .padding(.bottom, 24)
+                                .lineSpacing(6)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                     
                     Spacer(minLength: 0)
                     
-                    HStack {
-                        Text("← Skip")
-                            .foregroundColor(.red)
+                    HStack(spacing: 44) {
+                        Button(action: { handleSwipe(-500) }) {
+                            Label("Skip", systemImage: "arrow.left")
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundColor(.red)
+                                .frame(height: 44)
+                        }
+                        
                         Spacer()
-                        Text("Save →")
-                            .foregroundColor(.green)
+                        
+                        Button(action: { handleSwipe(500) }) {
+                            Label("Save", systemImage: "arrow.right")
+                                .font(.system(size: 17, weight: .semibold))
+                                .foregroundColor(.green)
+                                .frame(height: 44)
+                        }
                     }
-                    .padding(.horizontal, 40)
-                    .padding(.bottom, 30)
+                    .padding(.horizontal, 44)
+                    .padding(.bottom, 32)
                 }
             }
-            .frame(width: 320)
-            .frame(minHeight: 400, maxHeight: 600)
+            .frame(width: 340)
+            .frame(minHeight: 420, maxHeight: 620)
             .background(
-                RoundedRectangle(cornerRadius: 15)
+                RoundedRectangle(cornerRadius: 20)
                     .fill(colorScheme == .dark ? .white : .white)
-                    .shadow(radius: 10)
+                    .shadow(color: .black.opacity(0.15), radius: 15, x: 0, y: 5)
             )
             .offset(offset)
             .rotationEffect(.degrees(Double(offset.width / 20)))
@@ -236,13 +247,17 @@ struct CardView: View {
                 DragGesture()
                     .onChanged { gesture in
                         offset = gesture.translation
+                        
+                        // Change background color based on swipe direction
                         withAnimation {
                             color = offset.width > 0 ? .green.opacity(0.2) : .red.opacity(0.2)
                         }
                     }
-                    .onEnded { _ in
+                    .onEnded { gesture in
+                        handleSwipe(gesture.translation.width)
+                        
+                        // Reset background color
                         withAnimation {
-                            handleSwipe(offset.width)
                             color = .white
                         }
                     }

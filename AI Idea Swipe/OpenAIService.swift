@@ -17,42 +17,45 @@ class OpenAIService {
     /// - Returns: A formatted string containing the idea title and description
     /// - Throws: URLError if the API request fails
     func generateIdea() async throws -> String {
-        let categories = [
-            "Cozy Indoor Fun",
-            "Local Exploring",
-            "Food Adventures",
-            "Creative Moments",
-            "Nature & Parks",
-            "Sweet Treats",
-            "Silly Activities",
-            "Learning Together",
-            "Photo Fun",
-            "Random Acts"
-        ]
+        // Remove or comment out these lines since they're not being used
+        // let categories = [
+        //     "Cozy Indoor Fun",
+        //     "Local Exploring",
+        //     "Food Adventures",
+        //     "Creative Moments",
+        //     "Nature & Parks",
+        //     "Sweet Treats",
+        //     "Silly Activities",
+        //     "Learning Together",
+        //     "Photo Fun",
+        //     "Random Acts"
+        // ]
         
-        let randomCategory = categories.randomElement() ?? "Simple Activities"
+        // let randomCategory = categories.randomElement() ?? "Simple Activities"
         
         let prompt = """
-        Generate a unique and creative date idea in the category: \(randomCategory).
-        Make it specific and add a fun twist to make it memorable!
+        Give me a quick, real-life date idea that two people can do right now in Illinois.  
+        Rules:  
+        1. Use a casual, buddy-like tone—like texting a friend.  
+        2. Keep it under $30 total.  
+        3. Mention specific spots like Dunkin', Starbucks, Chipotle, Taco Bell, Panda Express, Wendy's, Target, Woodfield Mall, Gurnee Mills, Fox Valley Mall, HIP, AMC Theatres, Dave & Buster's, bowling alleys, or parking spots.  
+        4. Recommend specific trending movies, music, or TikTok activities so users don't have to choose.  
+        5. Make each idea logically structured, with one main activity that makes sense (no combining things that would conflict, like bowling and a movie at the same time).  
+        6. Keep it short, clear, and easy to do within 30 minutes of seeing the idea.  
 
-        Rules:
-        1. Use warm, friendly language like talking to a friend
-        2. Include one small, unexpected element to make it special
-        3. Keep it budget-friendly and doable today
-        4. Make it feel spontaneous and playful
-        5. Add enough detail to paint a clear picture
-        
-        Examples of good ideas:
-        - "Breakfast Food Hunt: Pick three local breakfast spots and share a different item at each place - one for coffee, one for pastries, and one wild card. Rate each spot together!"
-        - "Sunset Polaroid Walk: Take a walk at golden hour with a polaroid/phone camera, but here's the twist - take turns choosing random objects that spell out a word, then make a mini photo album."
-        - "DIY Taste Test Challenge: Visit a grocery store and each secretly pick 3 snacks under $5 that the other person has never tried. Find a nice spot outside and have a blind taste-testing session!"
-        - "Library Date with a Twist: Each person finds a children's book they loved as a kid and dramatically reads it to the other in a quiet corner of the library, doing all the character voices."
-        
-        Format as:
-        Title: [2-4 catchy words]
-        Description: [2-3 engaging sentences with specific details]
-        
+        Format as:  
+        Title: [2-4 catchy words]  
+        Description: [1-2 quick sentences with specifics]  
+
+        Examples:  
+        - "AMC & Frosties" – Catch a late-night movie at AMC, then swing by Wendy's for Frosties on the way home.  
+        - "Taco Bell & TikToks" – Grab Taco Bell takeout, park somewhere chill, and watch trending TikTok videos together.  
+        - "Starbucks & Mall Walk" – Get iced coffees from Starbucks and stroll through Woodfield Mall, people-watching and rating the best outfits.  
+        - "Dave & Buster's Showdown" – Head to Dave & Buster's, spend $10 each on games, and see who can win the weirdest prize.  
+        - "Target Snack Run" – Hit Target, each grab a $5 snack, and sit in the car listening to trending TikTok songs while rating each snack.  
+        - "Bowling & Pizza" – Bowl a quick game at the nearest alley, then share a small pizza from Panda Express next door.  
+        - "Dunkin' & Netflix" – Get hot chocolates from Dunkin', park somewhere quiet, and stream an episode of *Money Heist* on your phone.  
+
         Previous ideas to avoid: \(Array(previousIdeas).joined(separator: ", "))
         """
         

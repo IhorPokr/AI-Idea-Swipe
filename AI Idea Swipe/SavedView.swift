@@ -28,17 +28,23 @@ struct SavedView: View {
         NavigationView {
             List {
                 ForEach(items) { item in
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 12) {
                         Text(item.title.isEmpty ? "Untitled Idea" : item.title)
-                            .font(.headline)
+                            .font(.system(size: 20, weight: .semibold))
+                            .padding(.top, 4)
+                        
                         Text(item.ideaDescription)
-                            .font(.subheadline)
+                            .font(.system(size: 16))
                             .foregroundColor(.secondary)
+                            .lineSpacing(4)
+                            .padding(.bottom, 4)
                     }
+                    .padding(.vertical, 8)
                 }
                 .onDelete(perform: deleteItems)
             }
             .navigationTitle("Saved Ideas")
+            .listStyle(InsetGroupedListStyle())
         }
     }
 }

@@ -8,20 +8,60 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
-                Section("Appearance") {
-                    Text("Theme")
-                    Text("Card Style")
+                Section {
+                    NavigationLink(destination: ThemeSettingsView()) {
+                        Label("Theme", systemImage: "paintbrush")
+                            .font(.system(size: 17))
+                    }
+                    NavigationLink(destination: CardStyleSettingsView()) {
+                        Label("Card Style", systemImage: "rectangle.on.rectangle")
+                            .font(.system(size: 17))
+                    }
+                } header: {
+                    Text("Appearance")
+                        .textCase(.uppercase)
+                        .font(.system(size: 13, weight: .semibold))
                 }
                 
-                Section("Data") {
-                    Text("Clear All Data")
-                    Text("Export Data")
+                Section {
+                    Button(role: .destructive) {
+                        // Clear data action
+                    } label: {
+                        Label("Clear All Data", systemImage: "trash")
+                            .font(.system(size: 17))
+                    }
+                    
+                    Button {
+                        // Export action
+                    } label: {
+                        Label("Export Data", systemImage: "square.and.arrow.up")
+                            .font(.system(size: 17))
+                    }
+                } header: {
+                    Text("Data Management")
+                        .textCase(.uppercase)
+                        .font(.system(size: 13, weight: .semibold))
                 }
                 
-                Section("About") {
-                    Text("Version 1.0")
-                    Text("Privacy Policy")
-                    Text("Terms of Service")
+                Section {
+                    HStack {
+                        Text("Version")
+                        Spacer()
+                        Text("1.0.0")
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Link(destination: URL(string: "https://example.com/privacy")!) {
+                        Label("Privacy Policy", systemImage: "hand.raised")
+                    }
+                    
+                    Link(destination: URL(string: "https://example.com/terms")!) {
+                        Label("Terms of Service", systemImage: "doc.text")
+                    }
+                } header: {
+                    Text("About")
+                        .textCase(.uppercase)
+                        .font(.system(size: 13, weight: .semibold))
                 }
             }
             .navigationTitle("Settings")
